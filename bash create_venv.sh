@@ -76,14 +76,30 @@ if ! command -v pip &> /dev/null; then
     fi
 fi
 
-# Ask the user if they want to install packages from a requirements.txt file
-read -p "Do you want to install packages from a requirements.txt file? (y/n): " install_from_file
-if [[ $install_from_file == "y" ]]; then
-    read -p "Enter the path to the requirements.txt file: " requirements_path
-    if [ -f "$requirements_path" ]; then
-        echo "Installing packages from $requirements_path"
-        pip install -r $requirements_path
-    else
-        echo "$requirements_path does not exist or is not a file. Skipping package installation."
+# Check if the system has internet connection
+if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
+    echo "Internet connection detected."
+    # Ask the user if they want to install packages from a requirements.txt file
+    read -p "Do you want to install packages from a requirements.txt file? (y/n): " install_from_file
+    if [[ $install_from_file == "y" ]]; then
+        read -p "Enter the path to the requirements.txt file: " requirements_path
+        if [ -f "$requirements_path" ]; then
+            echo "Installing packages from $requirements_path"
+            pip install -r $requirements_path
+        else
+            echo "$requirements_path does not exist or is not a file. Skipping package installation."
+        fi
+    fi
+else
+    echo "No internet connection detected."
+    read -p "Do you want to install packages from a local path? (y/n): " install_from_local
+    if [[ $install_from_local == "y" ]]; then
+        read -p "Enter the path to the local packages directory: " local_path
+        if [ -d "$local_path" ]; then
+            echo "Installing packages from $local_path"
+            pip install --no-index --find-links=$local_path -r $requirements_path
+        else
+            echo "$local_path does not exist or is not a directory. Skipping package installation."
+        fi
     fi
 fi
