@@ -25,11 +25,14 @@ if ! command -v python &> /dev/null; then
                 sudo yum install python
             else
                 echo "This Linux distribution is not supported. Please install Python manually."
-                    else
+            fi
+        fi
+    else
         echo "Python installation was skipped. Exiting..."
         exit 1
     fi
 fi
+
 # Check if a virtual environment is already activated
 if [ -n "$VIRTUAL_ENV" ]; then
     read -p "A virtual environment is already activated, do you want to use it? (y/n): " use_existing
@@ -38,9 +41,6 @@ if [ -n "$VIRTUAL_ENV" ]; then
         exit 0
     fi
 fi
-
-echo "Enter the name of the virtual environment:"
-read venv_name
 
 echo "Enter the name of the virtual environment:"
 read venv_name
@@ -62,3 +62,16 @@ done
 source ${venv_name}/bin/activate
 
 echo "Virtual environment ${venv_name} has been created and activated using ${python_version}."
+
+# Ask the user if they want to install packages from a requirements.txt file
+
+read -p "Do you want to install packages from a requirements.txt file? (y/n): " install_from_file
+if [[ $install_from_file == "y" ]]; then
+    read -p "Enter the path to the requirements.txt file: " requirements_path
+    if [ -f "$requirements_path" ]; then
+        echo "Installing packages from $requirements_path"
+        pip install -r $requirements_path
+    else
+        echo "$requirements_path does not exist or is not a file. Skipping package installation."
+    fi
+fi
