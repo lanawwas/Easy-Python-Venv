@@ -30,6 +30,17 @@ if ! command -v python &> /dev/null; then
         exit 1
     fi
 fi
+# Check if a virtual environment is already activated
+if [ -n "$VIRTUAL_ENV" ]; then
+    read -p "A virtual environment is already activated, do you want to use it? (y/n): " use_existing
+    if [[ $use_existing == "y" ]]; then
+        echo "Using existing virtual environment: $VIRTUAL_ENV"
+        exit 0
+    fi
+fi
+
+echo "Enter the name of the virtual environment:"
+read venv_name
 
 echo "Enter the name of the virtual environment:"
 read venv_name
