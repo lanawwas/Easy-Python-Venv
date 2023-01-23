@@ -1,6 +1,6 @@
 # easy-venv-bash
 
-here's a bash script that reads the system's Python versions and prompts the user to select which one to use for the virtual environment:
+The script first checks if Python is installed on the system by running command -v python &> /dev/null which returns true if python is found in the system path and false otherwise. If it's not found, the script will prompt the user to install it and it will try to install python using the package manager that is supported by the user's OS. If the OS is not supported it will exit and ask the user to install python manually.
 
 
 This script prompts the user for the name of the virtual environment and then it uses ls to list all the files in the /usr/bin/ directory that contain the word "python" and filters out some files that are not needed, then it prompts the user to select which version of Python to use from the list of available versions.
