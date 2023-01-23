@@ -63,8 +63,20 @@ source ${venv_name}/bin/activate
 
 echo "Virtual environment ${venv_name} has been created and activated using ${python_version}."
 
-# Ask the user if they want to install packages from a requirements.txt file
+# Check if pip is installed
+if ! command -v pip &> /dev/null; then
+    echo "pip is not installed on this system."
+    read -p "Do you want to install it? (y/n): " install_pip
+    if [[ $install_pip == "y" ]]; then
+        echo "Installing pip..."
+        "${venv_name}/bin/python" -m ensurepip --upgrade
+    else
+        echo "pip installation was skipped. Skipping package installation."
+        exit 1
+    fi
+fi
 
+# Ask the user if they want to install packages from a requirements.txt file
 read -p "Do you want to install packages from a requirements.txt file? (y/n): " install_from_file
 if [[ $install_from_file == "y" ]]; then
     read -p "Enter the path to the requirements.txt file: " requirements_path
