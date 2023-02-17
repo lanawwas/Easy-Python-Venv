@@ -12,3 +12,5 @@ Then it uses the selected version of python to create the virtual environment an
 Please note that the path to the python version may vary depending on your system. This script assumes that the python versions are located in the /usr/bin directory.
 
 You can run this script by calling bash create_venv.sh on the command line, it will create the virtual environment with the specified name and python version, and activate it.
+
+**This project is for fun and to test the coding experience with ChatGPT**
