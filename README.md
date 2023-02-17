@@ -1,4 +1,4 @@
-# easy-venv-bash
+# Easy Python Venv - bash
 
 The script first checks if Python is installed on the system by running command -v python &> /dev/null which returns true if python is found in the system path and false otherwise. If it's not found, the script will prompt the user to install it and it will try to install python using the package manager that is supported by the user's OS. If the OS is not supported it will exit and ask the user to install python manually.
 
